@@ -1,0 +1,8 @@
+{
+  "name": "wondaris-datasource-sdk",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "wondaris-sdk": "git+ssh://git@github.com/Wondaris/Data-Source-SDK.git"
+  }
+}
