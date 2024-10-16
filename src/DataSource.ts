@@ -1,24 +1,31 @@
 import axios from 'axios'
 import * as tus from 'tus-js-client'
 import * as fs from 'node:fs'
-import { fileMetadata } from 'file-metadata'
+import * as Path from "node:path";
 
-class Datasource {
-  configs = {
+type DatasourceConfig = {
+  baseURL?: string
+  dataSource?: string
+  dataSet?: string
+  token?: string
+}
+
+class DataSource {
+  configs: DatasourceConfig = {
     baseURL: 'https://centralise.platform.wondaris.com/api/oauth/v1.0/gcs',
   }
 
-  constructor (configs = {}) {
-    this.configs = { ...this.configs, ...configs }
+  constructor(configs = {}) {
+    this.configs = {...this.configs, ...configs}
   }
 
-  setConfigs (configs = {}) {
-    this.configs = { ...this.configs, ...configs }
+  setConfigs(configs = {}) {
+    this.configs = {...this.configs, ...configs}
 
     return this
   }
 
-  validate () {
+  validate() {
     if (!this.configs.dataSet) {
       throw new Error('dataSet is required')
     }
@@ -32,7 +39,7 @@ class Datasource {
     return this
   }
 
-  async getUploadInfo () {
+  async getUploadInfo() {
     const url = `${this.configs.baseURL}/${this.configs.dataSource}/${this.configs.dataSet}`
 
     const options = {
@@ -45,7 +52,7 @@ class Datasource {
       }
     }
 
-    const { data } = await axios.request(options)
+    const {data} = await axios.request(options)
 
     if (!data) {
       throw new Error('Failed to get upload token')
@@ -54,25 +61,23 @@ class Datasource {
     return data
   }
 
-  async uploadToGcsSource (filePath, tusOptions = {}) {
+  async uploadToGcsSource(filePath: string, tusOptions: tus.UploadOptions = {}) {
     const uploadInfo = await this.validate().getUploadInfo()
 
     if (!fs.existsSync(filePath)) {
       throw new Error('File not found')
     }
 
-    const stats = await fileMetadata(filePath)
-
     const options = {
-      onError (error) {
+      onError(error) {
         console.error('An error occurred:')
         console.error(error)
       },
-      onProgress (bytesUploaded, bytesTotal) {
+      onProgress(bytesUploaded: number, bytesTotal: number) {
         const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
-        console.log(`Progress: ${percentage}% `, { bytesUploaded, bytesTotal })
+        console.log(`Progress: ${percentage}% `, {bytesUploaded, bytesTotal})
       },
-      onSuccess () {
+      onSuccess() {
         console.log('Upload finished')
       },
       chunkSize: 30 * 1024 * 1024,
@@ -81,7 +86,7 @@ class Datasource {
       endpoint: uploadInfo.url,
       metadata: {
         ...(tusOptions.metadata || {}),
-        filename: stats.displayName,
+        filename: Path.basename(filePath),
         // filetype: 'text/plain',
       },
       headers: {
@@ -99,4 +104,4 @@ class Datasource {
   }
 }
 
-export default Datasource
+export default DataSource

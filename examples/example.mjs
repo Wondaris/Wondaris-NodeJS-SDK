@@ -1,5 +1,5 @@
-const { configDotenv } = require('dotenv')
-const wondaris = require('wondaris-sdk').default
+import { configDotenv } from 'dotenv'
+import wondaris from 'wondaris-sdk'
 
 configDotenv()
 
@@ -10,7 +10,7 @@ const dataSource = new wondaris.WndrsDataSource({
   token: process.env.TOKEN,
 })
 
-dataSource.uploadToGcsSource('./example.csv', {
+await dataSource.uploadToGcsSource('./example.csv', {
   // example add more options to tus client
   // https://github.com/tus/tus-js-client/blob/main/docs/api.md
   onBeforeRequest () {
