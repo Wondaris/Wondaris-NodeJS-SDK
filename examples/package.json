@@ -3,6 +3,6 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "wondaris-sdk": "git+ssh://git@github.com/Wondaris/Wondaris-NodeJS-SDK.git"
+    "wondaris-nodejs-sdk": "^1.0.0"
   }
 }

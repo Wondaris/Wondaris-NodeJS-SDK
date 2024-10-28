@@ -43,7 +43,7 @@ var DataSource = class {
     }
     return data;
   }
-  async uploadToGcsSource(filePath, tusOptions = {}) {
+  async uploadToWondarisFileStore(filePath, tusOptions = {}) {
     const uploadInfo = await this.validate().getUploadInfo();
     if (!fs.existsSync(filePath)) {
       throw new Error("File not found");

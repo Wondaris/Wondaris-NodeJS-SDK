@@ -10,7 +10,7 @@ const dataSource = new wondaris.WndrsDataSource({
   token: process.env.TOKEN,
 })
 
-dataSource.uploadToGcsSource('./example.csv', {
+dataSource.uploadToWondarisFileStore('./example.csv', {
   // example add more options to tus client
   // https://github.com/tus/tus-js-client/blob/main/docs/api.md
   onBeforeRequest () {

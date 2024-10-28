@@ -61,7 +61,7 @@ class DataSource {
     return data
   }
 
-  async uploadToGcsSource(filePath: string, tusOptions: tus.UploadOptions = {}) {
+  async uploadToWondarisFileStore(filePath: string, tusOptions: tus.UploadOptions = {}) {
     const uploadInfo = await this.validate().getUploadInfo()
 
     if (!fs.existsSync(filePath)) {
