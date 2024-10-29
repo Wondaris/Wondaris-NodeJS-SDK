@@ -1,8 +1,7 @@
 {
-  "name": "wondaris-datasource-sdk",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "wondaris-nodejs-sdk": "^1.0.0"
+    "wondaris-sdk": "git+ssh://git@github.com/Wondaris/Wondaris-NodeJS-SDK.git"
   }
 }

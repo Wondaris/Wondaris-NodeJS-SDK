@@ -3,29 +3,52 @@ import * as tus from 'tus-js-client'
 import * as fs from 'node:fs'
 import * as Path from "node:path";
 
-type DatasourceConfig = {
+type DatasourceConfigs = {
   baseURL?: string
   dataSource?: string
   dataSet?: string
   token?: string
 }
 
+type UploadInfo = {
+  success: boolean
+  status_code: number
+  url: string
+  short_token: string
+}
+
 class DataSource {
-  configs: DatasourceConfig = {
+  configs: DatasourceConfigs = {
     baseURL: 'https://centralise.platform.wondaris.com/api/oauth/v1.0/gcs',
   }
 
-  constructor(configs = {}) {
+  /**
+   * Initialize a class and set the options.
+   *
+   * @param {DatasourceConfigs} configs
+   */
+  constructor(configs: DatasourceConfigs = {}) {
     this.configs = {...this.configs, ...configs}
   }
 
-  setConfigs(configs = {}) {
+  /**
+   * Set the options for the instance.
+   *
+   * @param {DatasourceConfigs} configs
+   * @return {DataSource}
+   */
+  setConfigs(configs: DatasourceConfigs = {}): DataSource {
     this.configs = {...this.configs, ...configs}
 
     return this
   }
 
-  validate() {
+  /**
+   * Validate the required options.
+   *
+   * @return {DataSource}
+   */
+  validate(): DataSource {
     if (!this.configs.dataSet) {
       throw new Error('dataSet is required')
     }
@@ -39,7 +62,12 @@ class DataSource {
     return this
   }
 
-  async getUploadInfo() {
+  /**
+   * Get the upload token from the Wondaris API via the data source, the data set and the token
+   *
+   * @return {Promise<UploadInfo>}
+   */
+  async getUploadInfo(): Promise<UploadInfo> {
     const url = `${this.configs.baseURL}/${this.configs.dataSource}/${this.configs.dataSet}`
 
     const options = {
