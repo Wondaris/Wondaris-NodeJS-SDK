@@ -7,13 +7,29 @@ var DataSource = class {
   configs = {
     baseURL: "https://centralise.platform.wondaris.com/api/oauth/v1.0/gcs"
   };
+  /**
+   * Initialize a class and set the options.
+   *
+   * @param {DatasourceConfigs} configs
+   */
   constructor(configs = {}) {
     this.configs = { ...this.configs, ...configs };
   }
+  /**
+   * Set the options for the instance.
+   *
+   * @param {DatasourceConfigs} configs
+   * @return {DataSource}
+   */
   setConfigs(configs = {}) {
     this.configs = { ...this.configs, ...configs };
     return this;
   }
+  /**
+   * Validate the required options.
+   *
+   * @return {DataSource}
+   */
   validate() {
     if (!this.configs.dataSet) {
       throw new Error("dataSet is required");
@@ -26,6 +42,11 @@ var DataSource = class {
     }
     return this;
   }
+  /**
+   * Get the upload token from the Wondaris API via the data source, the data set and the token
+   *
+   * @return {Promise<UploadInfo>}
+   */
   async getUploadInfo() {
     const url = `${this.configs.baseURL}/${this.configs.dataSource}/${this.configs.dataSet}`;
     const options = {
