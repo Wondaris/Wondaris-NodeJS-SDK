@@ -1,4 +1,4 @@
-# # Wondaris NodeJS File Uplaod SDK
+# Wondaris NodeJS File Uplaod SDK
 
 > This is the official Wondaris Python File Upload SDK that the Wondaris Team has developed for integrating applications using NodeJS for the Wondaris services.
 > 
