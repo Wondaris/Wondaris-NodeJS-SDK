@@ -1,8 +1,12 @@
 # Wondaris NodeJS File Uplaod SDK
 
-> This is the official Wondaris Python File Upload SDK that the Wondaris Team has developed for integrating applications using NodeJS for the Wondaris services.
-> 
-> This SDK simplifies uploading files to Wondaris File Storage via the [Tus protocol](https://tus.io/ "Open protocol for resumable uploads"), making it easy to integrate into your NodeJS projects.
+This is the official Wondaris Python File Upload SDK that the Wondaris Team has developed for integrating applications using NodeJS for the Wondaris services.
+
+This SDK simplifies uploading files to Wondaris File Storage via the [Tus protocol](https://tus.io/ "Open protocol for resumable uploads"), making it easy to integrate into your NodeJS projects.
+
+> [!IMPORTANT]  
+> This is a **BETA** release of the SDK - should you find any bugs, security issues or require any support, please report them to support@wondaris.com
+
 
 # Prerequisites
 
